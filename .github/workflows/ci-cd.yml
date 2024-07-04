@@ -1,0 +1,63 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - dev
+      - testing
+      - uat
+
+jobs:
+  deploy-dev:
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Before Script
+        run: |
+          echo "Before Script in dev"
+          npm install
+
+      - name: Deploy
+        run: |
+          echo "Script in dev"
+          npx sls deploy --region ap-south-1 --stage dev --verbose
+    environment: dev
+
+  deploy-testing:
+    if: github.ref == 'refs/heads/testing'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Before Script
+        run: |
+          echo "Before Script in testing"
+          npm install
+
+      - name: Deploy
+        run: |
+          echo "Script in testing"
+          npx sls deploy --region ap-south-1 --stage testing --verbose
+    environment: testing
+
+  deploy-uat:
+    if: github.ref == 'refs/heads/uat'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Before Script
+        run: |
+          echo "Before Script in uat"
+          npm install
+
+      - name: Deploy
+        run: |
+          echo "Script in uat"
+          npx sls deploy --region ap-south-1 --stage uat --verbose
+    environment: uat

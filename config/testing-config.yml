@@ -1,0 +1,9 @@
+data:
+  sendGrid:
+    senderEmail:
+      - sathish.mariappa@rhibhus.com
+    apiKey:
+      - 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
+  subscribedTopic:
+    topicArn:
+      - arn:aws:sns:ap-south-1:036801103583:${self:provider.stage}-upschool-sendOTP
