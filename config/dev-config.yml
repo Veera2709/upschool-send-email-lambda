@@ -3,7 +3,7 @@ data:
     senderEmail:
       - shilpa.rajashekar@rhibhus.com
     apiKey:
-      - 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
+      - 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
   subscribedTopic:
     topicArn:
       - arn:aws:sns:ap-south-1:036801103583:${self:provider.stage}-upschool-sendOTP
