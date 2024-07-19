@@ -6,7 +6,7 @@ on:
       - dev
       - testing
       - uat
-
+      - prod
 jobs:
   deploy-dev:
     if: github.ref == 'refs/heads/dev'
