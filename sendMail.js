@@ -137,7 +137,7 @@ const notifications = async (event) => {
             })
         })
     } else if (parseBody.mailFor == "quizGeneration") {
-        console.log("Mail to confirm QP and AP Creation"); 
+        console.log("Mail to confirm QP and AP Creation");
         fs.readFile("./upschoolEmailTemplate/quizGeneration.html", function (error, html) {
             if (error) {
                 throw error;
@@ -175,14 +175,20 @@ const notifications = async (event) => {
                 from: process.env.SENDER_EMAIL,
                 subject: parseBody.subject,
                 html: html_content
-                    .replace(/studentName/g, parseBody.studentName)
-                    .replace(/chapterName/g, parseBody.chapterNames)
-                    .replace(/schoolName/g, parseBody.schoolName),
-                attachment: parseBody.attachment
+                    .replace("{{studentName}}", parseBody.studentName)
+                    .replace("{{chapterName}}", parseBody.chapterNames)
+                    .replace("{{schoolName}}", parseBody.schoolName),
+                attachments: [
+                    {
+                        filename: parseBody.attachment.filename, 
+                        content: fs.readFileSync(parseBody.attachment.path).toString('base64'), 
+                        encoding: 'base64'
+                    }
+                ]
             };
-        
+
             console.log({ sendWorksheetMailOption });
-        
+
             mail.sendEmail(sendWorksheetMailOption, function (send_email_err, send_email_response) {
                 if (send_email_err) {
                     console.log("ERROR : SEND WORKSHEET EMAIL");
