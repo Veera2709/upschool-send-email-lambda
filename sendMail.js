@@ -178,7 +178,7 @@ const notifications = async (event) => {
                 html: html_content
                     .replace(/studentName/g, parseBody.studentName)
                     .replace(/chapterName/g, parseBody.chapterNames)
-                    .replace(/schoolName/g, schoolName),
+                    .replace(/schoolName/g, parseBody.schoolName),
                 attachment: parseBody.attachment
             };
         
