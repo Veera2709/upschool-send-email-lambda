@@ -181,7 +181,7 @@ const notifications = async (event) => {
                 attachments: [
                     {
                         filename: parseBody.attachment.filename, 
-                        content: fs.readFileSync(parseBody.attachment.path).toString('base64'), 
+                        content: parseBody.attachment.content, 
                         encoding: 'base64'
                     }
                 ]
