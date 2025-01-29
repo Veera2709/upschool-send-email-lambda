@@ -163,14 +163,13 @@ const notifications = async (event) => {
             })
         })
     } else if (parseBody.mailFor == "customWorksheetSender"){
-        fs.readFile("./upschoolEmailTemplate/worksheetAnswerScriptTemplate.html", function (error, html) {
+        fs.readFile("./upschoolEmailTemplate/customWorkSheet.html", function (error, html) {
             if (error) {
                 throw error;
             }
             
             let html_content = html.toString();
         
-            // Replacing placeholders with dynamic values from parseBody
             let sendWorksheetMailOption = {
                 to: parseBody.toMail,
                 from: process.env.SENDER_EMAIL,
