@@ -162,6 +162,38 @@ const notifications = async (event) => {
                 }
             })
         })
+    } else if (parseBody.mailFor == "customWorksheetSender"){
+        fs.readFile("./upschoolEmailTemplate/worksheetAnswerScriptTemplate.html", function (error, html) {
+            if (error) {
+                throw error;
+            }
+            
+            let html_content = html.toString();
+        
+            // Replacing placeholders with dynamic values from parseBody
+            let sendWorksheetMailOption = {
+                to: parseBody.toMail,
+                from: process.env.SENDER_EMAIL,
+                subject: parseBody.subject,
+                html: html_content
+                    .replace(/studentName/g, parseBody.studentName)
+                    .replace(/chapterName/g, parseBody.chapterNames)
+                    .replace(/schoolName/g, parseBody.schoolName),
+                attachment: parseBody.attachment
+            };
+        
+            console.log({ sendWorksheetMailOption });
+        
+            mail.sendEmail(sendWorksheetMailOption, function (send_email_err, send_email_response) {
+                if (send_email_err) {
+                    console.log("ERROR : SEND WORKSHEET EMAIL");
+                    console.log(send_email_err);
+                } else {
+                    console.log("WORKSHEET EMAIL SENT", send_email_response);
+                }
+            });
+        });
+        
     }
 };
 
