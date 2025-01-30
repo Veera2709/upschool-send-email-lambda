@@ -1,7 +1,7 @@
 data:
   sendGrid:
     senderEmail:
-      - sathish.mariappa@rhibhus.com
+      - noreply@up.school
     apiKey:
       - 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
   subscribedTopic:
