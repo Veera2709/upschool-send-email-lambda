@@ -137,7 +137,7 @@ const notifications = async (event) => {
             })
         })
     } else if (parseBody.mailFor == "quizGeneration") {
-        console.log("Mail to confirm QP and AP Creation"); 
+        console.log("Mail to confirm QP and AP Creation");
         fs.readFile("./upschoolEmailTemplate/quizGeneration.html", function (error, html) {
             if (error) {
                 throw error;
@@ -162,6 +162,43 @@ const notifications = async (event) => {
                 }
             })
         })
+    } else if (parseBody.mailFor == "customWorksheetSender"){
+        fs.readFile("./upschoolEmailTemplate/customWorkSheet.html", function (error, html) {
+            if (error) {
+                throw error;
+            }
+            
+            let html_content = html.toString();
+        
+            let sendWorksheetMailOption = {
+                to: parseBody.toMail,
+                from: process.env.SENDER_EMAIL,
+                subject: parseBody.subject,
+                html: html_content
+                    .replace("{{studentName}}", parseBody.studentName)
+                    .replace("{{chapterName}}", parseBody.chapterNames)
+                    .replace("{{schoolName}}", parseBody.schoolName),
+                attachments: [
+                    {
+                        filename: parseBody.attachment.filename, 
+                        content: parseBody.attachment.content, 
+                        encoding: 'base64'
+                    }
+                ]
+            };
+
+            console.log({ sendWorksheetMailOption });
+
+            mail.sendEmail(sendWorksheetMailOption, function (send_email_err, send_email_response) {
+                if (send_email_err) {
+                    console.log("ERROR : SEND WORKSHEET EMAIL");
+                    console.log(send_email_err);
+                } else {
+                    console.log("WORKSHEET EMAIL SENT", send_email_response);
+                }
+            });
+        });
+        
     }
 };
 
