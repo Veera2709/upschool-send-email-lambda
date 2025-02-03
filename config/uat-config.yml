@@ -1,9 +1,9 @@
 data:
   sendGrid:
     senderEmail:
-      - shilpa.rajashekar@rhibhus.com
+      - sathish.mariappa@rhibhus.com
     apiKey:
-      - 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
+      - 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
   subscribedTopic:
     topicArn:
       - arn:aws:sns:ap-south-1:036801103583:${self:provider.stage}-upschool-sendOTP
