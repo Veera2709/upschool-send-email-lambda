@@ -162,14 +162,14 @@ const notifications = async (event) => {
                 }
             })
         })
-    } else if (parseBody.mailFor == "customWorksheetSender"){
+    } else if (parseBody.mailFor == "customWorksheetSender") {
         fs.readFile("./upschoolEmailTemplate/customWorkSheet.html", function (error, html) {
             if (error) {
                 throw error;
             }
-            
+
             let html_content = html.toString();
-        
+
             let sendWorksheetMailOption = {
                 to: parseBody.toMail,
                 from: process.env.SENDER_EMAIL,
@@ -177,14 +177,8 @@ const notifications = async (event) => {
                 html: html_content
                     .replace("{{studentName}}", parseBody.studentName)
                     .replace("{{chapterName}}", parseBody.chapterNames)
-                    .replace("{{schoolName}}", parseBody.schoolName),
-                attachments: [
-                    {
-                        filename: parseBody.attachment.filename, 
-                        content: parseBody.attachment.content, 
-                        encoding: 'base64'
-                    }
-                ]
+                    .replace("{{schoolName}}", parseBody.schoolName)
+                    .replace("{{attachment.url}}", parseBody.link),
             };
 
             console.log({ sendWorksheetMailOption });
@@ -198,7 +192,7 @@ const notifications = async (event) => {
                 }
             });
         });
-        
+
     }
 };
 
